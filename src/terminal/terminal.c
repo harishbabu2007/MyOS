@@ -1,4 +1,5 @@
 #include"terminal.h"
+#include"../sutils/sutils.h"
 
 size_t terminal_row;
 size_t terminal_column;
@@ -51,20 +52,44 @@ void terminal_scroll_down(){
 
 void terminal_writestring(const char* data) 
 {
-	for (size_t i=0; i<strlen(data); i++){
-		if (data[i] == '\n'){
-			terminal_column = 0;
-			terminal_row++;
-		}
-		
+	for (size_t i=0; i<strlen(data); i++){		
 		if (++terminal_column == VGA_WIDTH){
 			terminal_column = 0;
 			if (++terminal_row == VGA_HEIGHT){
 				terminal_scroll_down();
-                --terminal_row;
 			}
+		}
+
+		if (data[i] == '\n'){
+			terminal_column = 0;
+			terminal_row++;
+		}
+
+		if (terminal_row == VGA_HEIGHT){
+			terminal_scroll_down();
+			terminal_row = VGA_HEIGHT-1;
 		}
 
 		if (data[i] != '\n') terminal_putentryat(data[i], terminal_color, terminal_column, terminal_row);
 	}
+}
+
+void terminal_writeint(int num){
+	int max_buffer = 100;
+	char buffer[max_buffer];
+
+	terminal_writestring(itoa(num, buffer, 10));
+}
+
+void terminal_putchar(char c){
+	char str[2] = {c};
+	terminal_writestring(str);
+}
+
+void terminal_backspace()
+{
+    if (terminal_column == 0) return;
+    terminal_column--;
+    terminal_putchar(' ');
+    terminal_column--;
 }

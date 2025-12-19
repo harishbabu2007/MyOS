@@ -57,3 +57,9 @@ char* itoa(int num, char* str, int base){
 
     return str;
 }
+
+void *memset(void *dest, int val, size_t len){
+    unsigned char *ptr = dest;
+    while (len--) *ptr++ = val;
+    return dest;
+}

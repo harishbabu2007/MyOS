@@ -1,25 +1,27 @@
 #include "terminal/terminal.h"
 #include "clock/clock.h"
+#include "sutils/ports.h"
+
+
+void idt_install();
+void idt_set_gate(int, uint32_t);
+void pic_remap();
+extern void irq1();
+void keyboard_init(void);
+void handle_keyboard_scancode(void);
+
+void main_loop(){
+	for (;;) {
+		handle_keyboard_scancode();
+    }
+}
 
 void kernel_main(void) 
-{
-	/* Initialize terminal interface */
+{	
 	terminal_initialize();
+    terminal_writestring("Keyboard ready\n");
 
-	/* Newline support is left as an exercise. */
-	terminal_writestring("My Operating System \n");
-	terminal_writestring("Made By harish \n");
+    keyboard_init();
 
-	int count = 0;
-	char count_str[100];
-
-	terminal_writestring(itoa(count, count_str, 10));
-	terminal_writestring("\n");
-
-	count = 10;
-
-	terminal_writestring(itoa(count, count_str, 10));
-	terminal_writestring("\n");
-
-	terminal_writestring("Hello world \n");
+    main_loop();
 }

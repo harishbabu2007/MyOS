@@ -21,21 +21,23 @@ ISO_DIR := isodir
 # =========================
 # Source & Object Files
 # =========================
-C_SOURCES := $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/**/*.c)
-C_OBJECTS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(C_SOURCES))
+C_SRCS   = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/**/*.c)
+ASM_SRCS = $(wildcard $(SRC_DIR)/*.s $(SRC_DIR)/**/*.s)
 
-ASM_SOURCE := $(SRC_DIR)/boot.s
-ASM_OBJECT := $(OBJ_DIR)/boot.o
+C_OBJS   = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(C_SRCS))
+ASM_OBJS = $(patsubst $(SRC_DIR)/%.s,$(OBJ_DIR)/%.o,$(ASM_SRCS))
+
+OBJS = $(ASM_OBJS) $(C_OBJS)
 
 # =========================
 # Targets
 # =========================
 all: link
 
-compile: $(ASM_OBJECT) $(C_OBJECTS)
+compile: $(OBJS)
 
 link: compile
-	$(LD) $(LDFLAGS) -o myos.bin $(ASM_OBJECT) $(C_OBJECTS) -lgcc
+	$(LD) $(LDFLAGS) -o myos.bin $(OBJS) -lgcc
 
 # =========================
 # Rules
@@ -44,8 +46,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	if not exist "$(dir $@)" mkdir "$(dir $@)"
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-$(ASM_OBJECT): $(ASM_SOURCE)
-	if not exist "$(OBJ_DIR)" mkdir "$(OBJ_DIR)"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
+	if not exist "$(dir $@)" mkdir "$(dir $@)"
 	$(AS) $< -o $@
 
 

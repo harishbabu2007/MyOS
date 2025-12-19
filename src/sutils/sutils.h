@@ -8,5 +8,6 @@
 size_t strlen(const char* str);
 void reverse_str(char* str, int length);
 char* itoa(int num, char* str, int base);
+void *memset(void *dest, int val, size_t len);
 
 #endif
