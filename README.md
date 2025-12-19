@@ -28,6 +28,6 @@ NOTE: the make run starts the qemu emulator with the compile iso file and grub b
 ## Practice Followed for developing MyOs
 the ```make compile```, ```make link``` ```make run``` commands were run on a windows environment with i686-elf tools, binutils, make and qemu installed and added to ```PATH```
 
-the ```make iso``` command was run on Ubuntu20 WSL inside the windows enviroment with the grub and grub tools installed along with xorriso
+the ```make iso``` command was run on Ubuntu24 WSL inside the windows enviroment with the grub and grub tools installed along with xorriso
 
 if you have any doubts and difficulties in setting up the dev environment for development and testing (which u will in most cases), please do refer https://wiki.osdev.org/GCC_Cross-Compiler. Since this operating system is built by following articles/blogs from [wiki.osdev.org](https://wiki.osdev.org/)
