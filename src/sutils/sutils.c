@@ -63,3 +63,22 @@ void *memset(void *dest, int val, size_t len){
     while (len--) *ptr++ = val;
     return dest;
 }
+
+char*strcpy(char*dest , const char*src){
+    size_t i = 0 ;
+    while((dest[i] = src[i]) != '\0'){
+        i++;
+        return dest ;
+
+    }
+
+}
+
+int strcmp(const char*str1 , const char*str2){
+    while(*str1  && (*str1 == *str2)){
+        str1++;
+        str2++;
+    }
+    return *(const unsigned char *)
+
+}
