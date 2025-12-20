@@ -79,6 +79,12 @@ int strcmp(const char*str1 , const char*str2){
         str1++;
         str2++;
     }
-    return *(const unsigned char *)
+    return *(const unsigned char *)str1 -*(const unsigned char *)str2 ;
 
+}
+char strconcat(char*dest , const char * src ){
+    char * ptr = dest + strlen(dest) ;
+    while((*ptr++ = *src++) != '\0'){
+        return dest ;
+    }
 }
