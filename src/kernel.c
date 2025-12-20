@@ -8,11 +8,11 @@ void idt_set_gate(int, uint32_t);
 void pic_remap();
 extern void irq1();
 void keyboard_init(void);
-void handle_keyboard_scancode(void);
+void get_keyboard_scancode(void);
 
 void main_loop(){
 	for (;;) {
-		handle_keyboard_scancode();
+		get_keyboard_scancode();
     }
 }
 
