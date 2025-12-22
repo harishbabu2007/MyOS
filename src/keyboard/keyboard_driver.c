@@ -32,7 +32,7 @@ void keyboard_init(void)
     outb(0x60, 0xF4);   // enable scanning
 }
 
-void handle_keys(uint8_t sc){
+void handle_keys_test_typing(uint8_t sc){
     if (sc == 0x0E && can_type) {
         terminal_backspace();
     } else if (sc < 128) {
@@ -43,13 +43,17 @@ void handle_keys(uint8_t sc){
     };
 }
 
-void get_keyboard_scancode(void) {
+uint8_t get_keyboard_sc(void){
+    uint8_t sc = -1;
+    
     if (inb(0x64) & 1) {
-        uint8_t sc = inb(0x60);
+        sc = inb(0x60);
 
         if (sc & 0x80)
-            return;
+            return -1;
 
-        handle_keys(sc);
+        return sc;
     }
+
+    return sc;
 }

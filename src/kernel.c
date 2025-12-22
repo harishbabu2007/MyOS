@@ -1,18 +1,15 @@
 #include "terminal/terminal.h"
 #include "clock/clock.h"
 #include "sutils/ports.h"
-
-
-void idt_install();
-void idt_set_gate(int, uint32_t);
-void pic_remap();
-extern void irq1();
-void keyboard_init(void);
-void get_keyboard_scancode(void);
+#include "keyboard/keyboard.h"
 
 void main_loop(){
 	for (;;) {
-		get_keyboard_scancode();
+        keyboard_event_t event = get_keyboard_event();
+
+        if (event.key == KEY_SPACE){
+            terminal_writestring("Space pressed!\n");
+        }
     }
 }
 
